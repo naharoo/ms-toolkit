@@ -43,80 +43,82 @@ public abstract class AbstractCrudService<T extends Identifiable<I>, I extends S
 
     @Override
     @Transactional
-    public T create(final T object) {
-        notNull(object, "object for creation cannot be null.");
+    public T create(final T entity) {
+        notNull(entity, "entity for creation cannot be null.");
         logger.trace("Creating a new {}...", entityClass.getSimpleName());
 
-        assureCreationInvariants(object);
-        final T created = crudRepository.save(object);
+        assureCreationInvariants(entity);
+        final T created = crudRepository.save(entity);
 
         logger.debug("Successfully created a new {}.", entityClass.getSimpleName());
         return created;
     }
 
-    protected void assureCreationInvariants(final T object) {
-        notNull(object, "object for creation cannot be null.");
-        final I id = object.getId();
-        isNull(id, "id of creation object must be null.");
+    protected void assureCreationInvariants(final T entity) {
+        notNull(entity, "entity for creation cannot be null.");
+        final I id = entity.getId();
+        isNull(id, "id of creation entity must be null.");
     }
 
     @Override
     @Transactional
-    public List<T> createAll(final Collection<? extends T> objects) {
-        notEmpty(objects, "objects for creation cannot be null or empty.");
-        logger.trace("Creating {} new {}s...", objects.size(), entityClass.getSimpleName());
+    public List<T> createAll(final Collection<? extends T> entities) {
+        notEmpty(entities, "entities for creation cannot be null or empty.");
+        entities.forEach(entity -> notNull(entity, "entity for creation cannot be null."));
+        logger.trace("Creating {} new {}s...", entities.size(), entityClass.getSimpleName());
 
-        assureCreationInvariants(objects);
+        assureCreationInvariants(entities);
         final List<T> created = StreamSupport
-                .stream(crudRepository.saveAll(objects).spliterator(), false)
+                .stream(crudRepository.saveAll(entities).spliterator(), false)
                 .collect(Collectors.toList());
 
-        logger.debug("Successfully created {} new {}s.", objects.size(), entityClass.getSimpleName());
+        logger.debug("Successfully created {} new {}s.", entities.size(), entityClass.getSimpleName());
         return created;
     }
 
-    protected void assureCreationInvariants(final Collection<? extends T> objects) {
-        notEmpty(objects, "objects for creation cannot be null or empty.");
-        objects.forEach(this::assureCreationInvariants);
+    protected void assureCreationInvariants(final Collection<? extends T> entities) {
+        notEmpty(entities, "entities for creation cannot be null or empty.");
+        entities.forEach(this::assureCreationInvariants);
     }
 
     @Override
     @Transactional
-    public T update(final T object) {
-        notNull(object, "object for update cannot be null.");
-        logger.trace("Updating {} with id:'{}'...", entityClass.getSimpleName(), object.getId());
+    public T update(final T entity) {
+        notNull(entity, "entity for update cannot be null.");
+        logger.trace("Updating {} with id:'{}'...", entityClass.getSimpleName(), entity.getId());
 
-        assureUpdateInvariants(object);
-        final T updated = crudRepository.save(object);
+        assureUpdateInvariants(entity);
+        final T updated = crudRepository.save(entity);
 
-        logger.debug("Successfully updated {} with id:'{}'.", entityClass.getSimpleName(), object.getId());
+        logger.debug("Successfully updated {} with id:'{}'.", entityClass.getSimpleName(), entity.getId());
         return updated;
     }
 
-    protected void assureUpdateInvariants(final T object) {
-        notNull(object, "object for update cannot be null.");
-        final I id = object.getId();
-        notNull(id, "id of update object cannot be null.");
+    protected void assureUpdateInvariants(final T entity) {
+        notNull(entity, "entity for update cannot be null.");
+        final I id = entity.getId();
+        notNull(id, "id of update entity cannot be null.");
     }
 
     @Override
     @Transactional
-    public List<T> updateAll(final Collection<? extends T> objects) {
-        notEmpty(objects, "objects for update cannot be null or empty.");
-        logger.trace("Updating {} {}s...", objects.size(), entityClass.getSimpleName());
+    public List<T> updateAll(final Collection<? extends T> entities) {
+        notEmpty(entities, "entities for update cannot be null or empty.");
+        entities.forEach(entity -> notNull(entity, "entity for update cannot be null."));
+        logger.trace("Updating {} {}s...", entities.size(), entityClass.getSimpleName());
 
-        assureUpdateInvariants(objects);
+        assureUpdateInvariants(entities);
         final List<T> created = StreamSupport
-                .stream(crudRepository.saveAll(objects).spliterator(), false)
+                .stream(crudRepository.saveAll(entities).spliterator(), false)
                 .collect(Collectors.toList());
 
-        logger.debug("Successfully updated {} {}s.", objects.size(), entityClass.getSimpleName());
+        logger.debug("Successfully updated {} {}s.", entities.size(), entityClass.getSimpleName());
         return created;
     }
 
-    protected void assureUpdateInvariants(final Collection<? extends T> objects) {
-        notEmpty(objects, "objects for update cannot be null or empty.");
-        objects.forEach(this::assureUpdateInvariants);
+    protected void assureUpdateInvariants(final Collection<? extends T> entities) {
+        notEmpty(entities, "entities for update cannot be null or empty.");
+        entities.forEach(this::assureUpdateInvariants);
     }
 
     @Override
@@ -125,15 +127,15 @@ public abstract class AbstractCrudService<T extends Identifiable<I>, I extends S
         notNull(id, "id for find by id cannot be null.");
         logger.trace("Finding {} by id:'{}'...", entityClass.getSimpleName(), id);
 
-        final Optional<T> objectOpt = crudRepository.findById(id);
+        final Optional<T> entityOpt = crudRepository.findById(id);
 
-        if (objectOpt.isPresent()) {
+        if (entityOpt.isPresent()) {
             logger.debug("Successfully found {} by id:'{}'.", entityClass.getSimpleName(), id);
         } else {
             logger.debug("No {} has been found by id:'{}'.", entityClass.getSimpleName(), id);
         }
 
-        return objectOpt;
+        return entityOpt;
     }
 
     @Override
@@ -142,11 +144,11 @@ public abstract class AbstractCrudService<T extends Identifiable<I>, I extends S
         notNull(id, "id for get by id cannot be null.");
         logger.trace("Getting {} by id:'{}'...", entityClass.getSimpleName(), id);
 
-        final Optional<T> objectOpt = find(id);
+        final Optional<T> entityOpt = find(id);
 
-        if (objectOpt.isPresent()) {
+        if (entityOpt.isPresent()) {
             logger.debug("Successfully got {} by id:'{}'.", entityClass.getSimpleName(), id);
-            return objectOpt.get();
+            return entityOpt.get();
         }
 
         logger.debug("No {} has been found by id:'{}'. Nothing to get.", entityClass.getSimpleName(), id);
@@ -158,31 +160,32 @@ public abstract class AbstractCrudService<T extends Identifiable<I>, I extends S
     public List<T> getAll() {
         logger.trace("Getting all {}s...", entityClass.getSimpleName());
 
-        final List<T> objects = StreamSupport
+        final List<T> entities = StreamSupport
                 .stream(crudRepository.findAll().spliterator(), false)
                 .collect(Collectors.toList());
 
-        logger.debug("Successfully got {} {}s.", objects.size(), entityClass.getSimpleName());
-        return objects;
+        logger.debug("Successfully got {} {}s.", entities.size(), entityClass.getSimpleName());
+        return entities;
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<T> getByIds(final Collection<? extends I> ids) {
         notEmpty(ids, "ids for get by ids cannot be null or empty.");
+        ids.forEach(id -> notNull(id, "id for get by id cannot be null."));
         logger.trace("Getting {} {}s by ids...", ids.size(), entityClass.getSimpleName());
 
-        final List<T> objects = StreamSupport
+        final List<T> entities = StreamSupport
                 .stream(crudRepository.findAllById(new ArrayList<>(ids)).spliterator(), false)
                 .collect(Collectors.toList());
 
         logger.debug(
                 "Successfully got {} from {} requested {}s by ids.",
-                objects.size(),
+                entities.size(),
                 ids.size(),
                 entityClass.getSimpleName()
         );
-        return objects;
+        return entities;
     }
 
     @Override
@@ -214,6 +217,7 @@ public abstract class AbstractCrudService<T extends Identifiable<I>, I extends S
     @Transactional
     public void deleteByIds(final Collection<? extends I> ids) {
         notEmpty(ids, "ids for delete by ids cannot be null or empty.");
+        ids.forEach(id -> notNull(id, "id for delete by id cannot be null."));
         logger.trace("Deleting {} {}s by ids...", ids.size(), entityClass.getSimpleName());
 
         doDelete(ids);
