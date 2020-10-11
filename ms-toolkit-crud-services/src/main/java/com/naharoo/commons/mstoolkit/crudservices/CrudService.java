@@ -2,11 +2,12 @@ package com.naharoo.commons.mstoolkit.crudservices;
 
 import org.springframework.lang.NonNull;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-public interface CrudService<T, I> {
+public interface CrudService<T extends Identifiable<I>, I extends Serializable> {
 
     @NonNull
     T create(@NonNull T object);

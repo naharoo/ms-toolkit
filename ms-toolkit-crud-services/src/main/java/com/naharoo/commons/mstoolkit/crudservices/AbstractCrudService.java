@@ -7,6 +7,7 @@ import org.springframework.core.GenericTypeResolver;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -14,10 +15,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.springframework.util.Assert.notEmpty;
-import static org.springframework.util.Assert.notNull;
+import static org.springframework.util.Assert.*;
 
-public abstract class AbstractCrudService<T, I> implements CrudService<T, I> {
+public abstract class AbstractCrudService<T extends Identifiable<I>, I extends Serializable> implements CrudService<T, I> {
 
     protected final Class<T> entityClass = resolveGenericEntityType();
 
@@ -56,6 +56,8 @@ public abstract class AbstractCrudService<T, I> implements CrudService<T, I> {
 
     protected void assureCreationInvariants(final T object) {
         notNull(object, "object for creation cannot be null.");
+        final I id = object.getId();
+        isNull(id, "id of creation object must be null.");
     }
 
     @Override
@@ -82,17 +84,19 @@ public abstract class AbstractCrudService<T, I> implements CrudService<T, I> {
     @Transactional
     public T update(final T object) {
         notNull(object, "object for update cannot be null.");
-        logger.trace("Updating {}...", entityClass.getSimpleName());
+        logger.trace("Updating {} with id:'{}'...", entityClass.getSimpleName(), object.getId());
 
         assureUpdateInvariants(object);
         final T updated = crudRepository.save(object);
 
-        logger.debug("Successfully updated {}.", entityClass.getSimpleName());
+        logger.debug("Successfully updated {} with id:'{}'.", entityClass.getSimpleName(), object.getId());
         return updated;
     }
 
     protected void assureUpdateInvariants(final T object) {
         notNull(object, "object for update cannot be null.");
+        final I id = object.getId();
+        notNull(id, "id of update object cannot be null.");
     }
 
     @Override
