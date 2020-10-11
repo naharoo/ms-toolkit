@@ -10,6 +10,7 @@
     <modules>
         <module>ms-toolkit-exceptions</module>
         <module>ms-toolkit-rest-exception-handler-starter</module>
+        <module>ms-toolkit-crud-services</module>
     </modules>
 
     <name>MS Toolkit</name>
@@ -43,6 +44,7 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.boot.version>2.3.4.RELEASE</spring.boot.version>
+        <spring.data.version>2.3.4.RELEASE</spring.data.version>
         <spring.version>5.2.9.RELEASE</spring.version>
         <hibernate.validator.version>6.1.5.Final</hibernate.validator.version>
         <jakarta.servlet-api.version>4.0.4</jakarta.servlet-api.version>

@@ -11,8 +11,7 @@ public enum CommonExceptionType implements ExceptionType {
     REQUEST_DATA_TYPE_MISMATCH(400),
     MEDIA_TYPE_NOT_ACCEPTABLE(406),
     MEDIA_TYPE_NOT_SUPPORTED(415),
-    REQUEST_HANDLER_MISSING(404),
-    UNKNOWN(500);
+    REQUEST_HANDLER_MISSING(404);
 
     private final int statusCode;
 
