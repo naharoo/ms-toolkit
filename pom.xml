@@ -8,6 +8,7 @@
 
     <packaging>pom</packaging>
     <modules>
+        <module>ms-toolkit-bom</module>
         <module>ms-toolkit-exceptions</module>
         <module>ms-toolkit-rest-exception-handler-starter</module>
         <module>ms-toolkit-crud-services</module>
