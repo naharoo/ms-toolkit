@@ -1,7 +1,7 @@
 package com.naharoo.commons.mstoolkit.rest.exceptionhandler;
 
-import com.naharoo.commons.mstoolkit.exceptions.CommonExceptionType;
-import com.naharoo.commons.mstoolkit.exceptions.ExceptionType;
+import com.naharoo.commons.mstoolkit.exceptions.CommonIssueType;
+import com.naharoo.commons.mstoolkit.exceptions.IssueType;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -33,7 +33,7 @@ public class MethodArgumentTypeMismatchExceptionHandler extends AbstractExceptio
         final HttpServletRequestInfoBuilder infoBuilder = HttpServletRequestInfoBuilder.newInstance(request);
         logTrace(exception, infoBuilder);
 
-        final ExceptionType type = CommonExceptionType.REQUEST_DATA_TYPE_MISMATCH;
+        final IssueType type = CommonIssueType.REQUEST_DATA_TYPE_MISMATCH;
         final int statusCode = type.statusCode();
 
         final Class<?> requiredType = exception.getRequiredType();

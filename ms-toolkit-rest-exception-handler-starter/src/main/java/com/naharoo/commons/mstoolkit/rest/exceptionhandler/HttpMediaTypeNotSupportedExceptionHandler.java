@@ -1,7 +1,7 @@
 package com.naharoo.commons.mstoolkit.rest.exceptionhandler;
 
-import com.naharoo.commons.mstoolkit.exceptions.CommonExceptionType;
-import com.naharoo.commons.mstoolkit.exceptions.ExceptionType;
+import com.naharoo.commons.mstoolkit.exceptions.CommonIssueType;
+import com.naharoo.commons.mstoolkit.exceptions.IssueType;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -33,7 +33,7 @@ public class HttpMediaTypeNotSupportedExceptionHandler extends AbstractException
         final HttpServletRequestInfoBuilder infoBuilder = HttpServletRequestInfoBuilder.newInstance(request);
         logTrace(exception, infoBuilder);
 
-        final ExceptionType type = CommonExceptionType.MEDIA_TYPE_NOT_SUPPORTED;
+        final IssueType type = CommonIssueType.MEDIA_TYPE_NOT_SUPPORTED;
         final int statusCode = type.statusCode();
 
         final ResponseEntity<ApiErrorResponse> response = ResponseEntity.status(statusCode).body(new ApiErrorResponse(

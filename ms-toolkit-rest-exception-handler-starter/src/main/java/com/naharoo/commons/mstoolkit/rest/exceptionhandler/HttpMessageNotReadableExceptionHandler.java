@@ -1,7 +1,7 @@
 package com.naharoo.commons.mstoolkit.rest.exceptionhandler;
 
-import com.naharoo.commons.mstoolkit.exceptions.CommonExceptionType;
-import com.naharoo.commons.mstoolkit.exceptions.ExceptionType;
+import com.naharoo.commons.mstoolkit.exceptions.CommonIssueType;
+import com.naharoo.commons.mstoolkit.exceptions.IssueType;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -33,7 +33,7 @@ public class HttpMessageNotReadableExceptionHandler extends AbstractExceptionHan
         final HttpServletRequestInfoBuilder infoBuilder = HttpServletRequestInfoBuilder.newInstance(request);
         logTrace(exception, infoBuilder);
 
-        final ExceptionType type = CommonExceptionType.NOT_READABLE_REQUEST_BODY;
+        final IssueType type = CommonIssueType.NOT_READABLE_REQUEST_BODY;
         final int statusCode = type.statusCode();
 
         final ResponseEntity<ApiErrorResponse> response = ResponseEntity.status(statusCode).body(new ApiErrorResponse(

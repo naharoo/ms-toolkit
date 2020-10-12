@@ -1,6 +1,6 @@
 package com.naharoo.commons.mstoolkit.rest.exceptionhandler;
 
-import com.naharoo.commons.mstoolkit.exceptions.ExceptionType;
+import com.naharoo.commons.mstoolkit.exceptions.IssueType;
 import com.naharoo.commons.mstoolkit.exceptions.MsException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,8 +8,10 @@ import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 
-import static java.util.Collections.*;
+import static java.util.Collections.emptyList;
+import static java.util.Collections.singletonList;
 
 public abstract class AbstractExceptionHandler {
 
@@ -19,11 +21,11 @@ public abstract class AbstractExceptionHandler {
         final HttpServletRequestInfoBuilder infoBuilder = HttpServletRequestInfoBuilder.newInstance(request);
         logTrace(exception, infoBuilder);
 
-        final ExceptionType type = exception.getType();
+        final IssueType type = exception.getReportingIssueType();
         final int statusCode = type.statusCode();
         final ResponseEntity<ApiErrorResponse> response = ResponseEntity.status(statusCode).body(new ApiErrorResponse(
                 statusCode,
-                singleton(type),
+                new HashSet<>(exception.getTypes()),
                 exception.getLocalizedMessage() != null ? singletonList(exception.getLocalizedMessage()) : emptyList(),
                 LocalDateTime.now()
         ));

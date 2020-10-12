@@ -3,15 +3,15 @@ package com.naharoo.commons.mstoolkit.exceptions;
 import java.io.Serializable;
 
 /**
- * Type of a known exception.
+ * Type of a known issue.
  * <p>
  * Custom implementations of this interface must provide unique String representation of itself via {@link #asString()} method.
  * Those String representations must be globally unique to avoid ambiguity in handlers.
  * <p>
- * If this exception is handled by Rest Exception Handler, then the implementations must also override default method
+ * If the exception related to this issue is handled by Rest Exception Handler, then the implementations must also override default method
  * {@link #statusCode()} and provide corresponding HTTP Status Code.
  */
-public interface ExceptionType extends Serializable {
+public interface IssueType extends Serializable {
 
     /**
      * Unique String representation of a type.

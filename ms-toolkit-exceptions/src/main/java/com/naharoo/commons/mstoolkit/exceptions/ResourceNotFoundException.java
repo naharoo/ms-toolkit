@@ -4,13 +4,15 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static java.util.Collections.singletonList;
+
 public class ResourceNotFoundException extends MsException {
 
     private static final long serialVersionUID = 8395113877763828231L;
     private static final String DEFAULT_MESSAGE_FORMAT = "No %s can be found by given %s.";
 
     public ResourceNotFoundException(final String message, final Throwable cause) {
-        super(CommonExceptionType.RESOURCE_NOT_FOUND, message, cause);
+        super(singletonList(CommonIssueType.RESOURCE_NOT_FOUND), message, cause);
     }
 
     public static ResourceNotFoundException createInstance(

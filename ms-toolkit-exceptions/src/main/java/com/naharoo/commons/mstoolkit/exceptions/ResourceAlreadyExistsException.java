@@ -4,13 +4,15 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static java.util.Collections.singletonList;
+
 public class ResourceAlreadyExistsException extends MsException {
 
     private static final long serialVersionUID = 8395113877763828231L;
     private static final String DEFAULT_MESSAGE_FORMAT = "%s already exists by %s.";
 
     public ResourceAlreadyExistsException(final String message, final Throwable cause) {
-        super(CommonExceptionType.RESOURCE_ALREADY_EXISTS, message, cause);
+        super(singletonList(CommonIssueType.RESOURCE_ALREADY_EXISTS), message, cause);
     }
 
     public static ResourceAlreadyExistsException createInstance(

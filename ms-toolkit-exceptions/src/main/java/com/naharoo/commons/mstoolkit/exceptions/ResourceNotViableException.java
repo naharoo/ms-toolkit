@@ -4,13 +4,15 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static java.util.Collections.singletonList;
+
 public class ResourceNotViableException extends MsException {
 
     private static final long serialVersionUID = 1441613319507470057L;
     private static final String DEFAULT_MESSAGE_FORMAT = "%s by given %s is not viable.";
 
     public ResourceNotViableException(final String message, final Throwable cause) {
-        super(CommonExceptionType.RESOURCE_NOT_VIABLE, message, cause);
+        super(singletonList(CommonIssueType.RESOURCE_NOT_VIABLE), message, cause);
     }
 
     public static ResourceNotViableException createInstance(

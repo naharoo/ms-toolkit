@@ -1,6 +1,6 @@
 package com.naharoo.commons.mstoolkit.exceptions;
 
-public enum CommonExceptionType implements ExceptionType {
+public enum CommonIssueType implements IssueType {
     RESOURCE_NOT_FOUND(404),
     RESOURCE_ALREADY_EXISTS(409),
     RESOURCE_NOT_VIABLE(410),
@@ -15,7 +15,7 @@ public enum CommonExceptionType implements ExceptionType {
 
     private final int statusCode;
 
-    CommonExceptionType(final int statusCode) {
+    CommonIssueType(final int statusCode) {
         this.statusCode = statusCode;
     }
 

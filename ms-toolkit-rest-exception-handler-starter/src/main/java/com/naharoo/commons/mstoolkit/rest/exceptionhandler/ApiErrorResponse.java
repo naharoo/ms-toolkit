@@ -3,7 +3,7 @@ package com.naharoo.commons.mstoolkit.rest.exceptionhandler;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.naharoo.commons.mstoolkit.exceptions.ExceptionType;
+import com.naharoo.commons.mstoolkit.exceptions.IssueType;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,14 +14,14 @@ import java.util.StringJoiner;
 public final class ApiErrorResponse {
 
     private final int statusCode;
-    private final Set<ExceptionType> types;
+    private final Set<IssueType> types;
     private final List<String> messages;
     private final LocalDateTime timestamp;
 
     @JsonCreator
     public ApiErrorResponse(
             @JsonProperty("statusCode") final int statusCode,
-            @JsonProperty("types") final Set<ExceptionType> types,
+            @JsonProperty("types") final Set<IssueType> types,
             @JsonProperty("messages") final List<String> messages,
             @JsonProperty("timestamp") @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") final LocalDateTime timestamp
     ) {
@@ -35,7 +35,7 @@ public final class ApiErrorResponse {
         return statusCode;
     }
 
-    public Set<ExceptionType> getTypes() {
+    public Set<IssueType> getTypes() {
         return types;
     }
 
