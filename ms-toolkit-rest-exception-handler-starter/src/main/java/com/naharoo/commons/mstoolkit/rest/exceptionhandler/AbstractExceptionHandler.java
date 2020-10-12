@@ -23,6 +23,11 @@ public abstract class AbstractExceptionHandler {
 
         final IssueType type = exception.getReportingIssueType();
         final int statusCode = type.statusCode();
+
+        if (statusCode == -1) {
+            throw new IllegalArgumentException("Reporting Issue Type's status code should be legal HTTP Status Code");
+        }
+
         final ResponseEntity<ApiErrorResponse> response = ResponseEntity.status(statusCode).body(new ApiErrorResponse(
                 statusCode,
                 new HashSet<>(exception.getTypes()),
