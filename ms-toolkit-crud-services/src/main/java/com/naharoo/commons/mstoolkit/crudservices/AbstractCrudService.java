@@ -1,5 +1,6 @@
 package com.naharoo.commons.mstoolkit.crudservices;
 
+import com.naharoo.commons.mstoolkit.domainmodel.Identifiable;
 import com.naharoo.commons.mstoolkit.exceptions.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

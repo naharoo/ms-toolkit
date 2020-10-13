@@ -1,10 +1,9 @@
-package com.naharoo.commons.mstoolkit.crudservices;
+package com.naharoo.commons.mstoolkit.domainmodel;
 
 import java.io.Serializable;
 
 /**
- * Marker interface for all identifiable entities which will be managed
- * by {@link com.naharoo.commons.mstoolkit.crudservices.CrudService}
+ * Marker interface for all identifiable entities, domain objects, transfer objects
  *
  * @param <I> the type of an <code>id</code> field
  */
