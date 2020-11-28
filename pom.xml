@@ -50,6 +50,7 @@
         <spring.version>5.2.9.RELEASE</spring.version>
         <hibernate.validator.version>6.1.5.Final</hibernate.validator.version>
         <jakarta.servlet-api.version>4.0.4</jakarta.servlet-api.version>
+        <openfeign.version>10.10.1</openfeign.version>
         <deploy.plugin.version>3.0.0-M1</deploy.plugin.version>
         <release.plugin.version>3.0.0-M1</release.plugin.version>
         <surefire.plugin.version>2.22.2</surefire.plugin.version>
