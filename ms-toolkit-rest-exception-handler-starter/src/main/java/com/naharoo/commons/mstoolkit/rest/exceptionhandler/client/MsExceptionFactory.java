@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.naharoo.commons.mstoolkit.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -19,6 +20,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static java.util.Collections.singletonList;
 
 @Component
 public class MsExceptionFactory {
@@ -31,6 +34,18 @@ public class MsExceptionFactory {
     }
 
     public MsException createInstance(final int status, final InputStreamSupplier inputStreamSupplier) {
+        if (inputStreamSupplier == null) {
+            final HttpStatus httpStatus = HttpStatus.valueOf(status);
+            if (httpStatus.is4xxClientError()) {
+                return CustomMsException.createInstance(singletonList(new LocalIssueType(
+                        "UNKNOWN_ERROR",
+                        status
+                )));
+            }
+            throw new IllegalStateException(
+                    "Failed to process HTTP request's response. Unable to extract response body.");
+        }
+
         try (final InputStream inputStream = inputStreamSupplier.supply()) {
             final ApiErrorResponse apiErrorResponse =
                     objectMapper.readValue(inputStream, ApiErrorResponse.class);

@@ -32,6 +32,7 @@ public class FeignErrorDecoder implements ErrorDecoder {
                     ));
         }
 
-        return msExceptionFactory.createInstance(status, response.body()::asInputStream);
+        final Response.Body body = response.body();
+        return msExceptionFactory.createInstance(status, body == null ? null : body::asInputStream);
     }
 }
