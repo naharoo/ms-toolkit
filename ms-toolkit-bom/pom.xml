@@ -3,7 +3,7 @@
     <parent>
         <groupId>com.naharoo.commons</groupId>
         <artifactId>ms-toolkit</artifactId>
-        <version>0.7.2</version>
+        <version>0.7.3-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -24,22 +24,22 @@
             <dependency>
                 <groupId>com.naharoo.commons</groupId>
                 <artifactId>ms-toolkit-domain-model</artifactId>
-                <version>0.7.2</version>
+                <version>0.7.3-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.naharoo.commons</groupId>
                 <artifactId>ms-toolkit-exceptions</artifactId>
-                <version>0.7.2</version>
+                <version>0.7.3-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.naharoo.commons</groupId>
                 <artifactId>ms-toolkit-rest-exception-handler-starter</artifactId>
-                <version>0.7.2</version>
+                <version>0.7.3-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.naharoo.commons</groupId>
                 <artifactId>ms-toolkit-crud-services</artifactId>
-                <version>0.7.2</version>
+                <version>0.7.3-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.naharoo.commons</groupId>
